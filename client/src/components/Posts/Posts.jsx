@@ -13,15 +13,15 @@ const Posts = () => {
   useEffect(() => {
     dispatch(getTimelinePosts(user._id));
   }, []);
-  if(!posts) return 'No Posts';
-  if(params.id) posts = posts.filter((post)=> post.userId===params.id)
+  if (!posts) return 'No Posts';
+  if (params.id) posts = posts.filter((post) => post.userId === params.id)
   return (
     <div className="Posts">
       {loading
         ? "Fetching posts...."
         : posts.map((post, id) => {
-            return <Post data={post} key={id} />;
-          })}
+          return <Post data={post} key={id} />;
+        })}
     </div>
   );
 };

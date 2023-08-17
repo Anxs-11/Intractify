@@ -13,9 +13,10 @@ const Auth = () => {
     password: "",
     confirmpass: "",
   };
+  const dispatch = useDispatch();
   const loading = useSelector((state) => state.authReducer.loading);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const [isSignUp, setIsSignUp] = useState(false);
 
   const [data, setData] = useState(initialState);
@@ -56,7 +57,7 @@ const Auth = () => {
         <img src={Logo} alt="" />
 
         <div className="Webname">
-          <h1>ZKC Media</h1>
+          <h1>InteractoMedia</h1>
           <h6>Explore the ideas throughout the world</h6>
         </div>
       </div>

@@ -4,36 +4,36 @@ const UserSchema = mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: true
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
     firstname: {
       type: String,
-      required: true,
+      required: true
     },
     lastname: {
       type: String,
-      required: true,
+      required: true
     },
     isAdmin: {
       type: Boolean,
       default: false,
     },
-   profilePicture: String,
+    profilePicture: String,
     coverPicture: String,
     about: String,
     livesIn: String,
     worksAt: String,
+    country:String,
     relationship: String,
-    country: String,
     followers: [],
-    following: [],
+    following: []
   },
   { timestamps: true }
-);
+)
 
 const UserModel = mongoose.model("Users", UserSchema);
-export default UserModel;
+export default UserModel

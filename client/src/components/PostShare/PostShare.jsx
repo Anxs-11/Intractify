@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import ProfileImage from "../../img/profileImg.jpg";
 import "./PostShare.css";
 import { UilScenery } from "@iconscout/react-unicons";
 import { UilPlayCircle } from "@iconscout/react-unicons";
@@ -6,27 +7,26 @@ import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadImage, uploadPost } from "../../actions/UploadAction";
-
+import { uploadImage, uploadPost } from "../../actions/UploadActions";
 const PostShare = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.authReducer.authData);
-  const loading = useSelector((state) => state.postReducer.uploading);
   const [image, setImage] = useState(null);
+  const imageRef = useRef();
+  const loading=useSelector((state)=>state.postReducer.uploading);
+  const dispatch=useDispatch();
+  const { user } = useSelector((state) => state.authReducer.authData);
   const desc = useRef();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  // handle Image Change
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       setImage(img);
-    }
+    };
+    
   };
-
-  const imageRef = useRef();
-
-  // handle post upload
+  const reset=()=>{
+    setImage(null);
+    desc.current.value="";
+  }
   const handleUpload = async (e) => {
     e.preventDefault();
 
@@ -51,72 +51,57 @@ const PostShare = () => {
       }
     }
     dispatch(uploadPost(newPost));
-    resetShare();
-  };
-
-  // Reset Post Share
-  const resetShare = () => {
-    setImage(null);
-    desc.current.value = "";
+    reset();
   };
   return (
     <div className="PostShare">
-      <img
-        src={
-          user.profilePicture
-            ? serverPublic + user.profilePicture
-            : serverPublic + "defaultProfile.png"
-        }
-        alt="Profile"
-      />
+      <img src={user.profilePicture
+        ? serverPublic + user.profilePicture
+        : serverPublic + "defaultprofile.png"} alt="" />
       <div>
-        <input
-          type="text"
-          placeholder="What's happening?"
-          required
-          ref={desc}
-        />
+        <input required
+          ref={desc} type="text" placeholder="What's happening" />
         <div className="postOptions">
-          <div
-            className="option"
-            style={{ color: "var(--photo)" }}
+          <div className="option" style={{ color: "var(--photo)" }}
             onClick={() => imageRef.current.click()}
           >
             <UilScenery />
             Photo
           </div>
-
           <div className="option" style={{ color: "var(--video)" }}>
             <UilPlayCircle />
             Video
-          </div>
+          </div>{" "}
           <div className="option" style={{ color: "var(--location)" }}>
             <UilLocationPoint />
             Location
-          </div>
+          </div>{" "}
           <div className="option" style={{ color: "var(--shedule)" }}>
             <UilSchedule />
             Shedule
           </div>
-          <button
-            className="button ps-button"
-            onClick={handleUpload}
-            disabled={loading}
-          >
-            {loading ? "uploading" : "Share"}
+          <button className="button ps-button" onClick={handleUpload} disabled={loading}>
+            {loading?"Uploading...":"Share"}
           </button>
-
           <div style={{ display: "none" }}>
-            <input type="file" ref={imageRef} onChange={onImageChange} />
+            <input
+              type="file"
+              name="myImage"
+              ref={imageRef}
+              onChange={onImageChange}
+            />
           </div>
         </div>
-
         {image && (
+
           <div className="previewImage">
             <UilTimes onClick={() => setImage(null)} />
-            <img src={URL.createObjectURL(image)} alt="preview" />
+            <img src={URL.createObjectURL(image)} alt="" />
           </div>
+
         )}
+
+
       </div>
     </div>
   );
