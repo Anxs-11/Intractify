@@ -7,6 +7,8 @@ import AuthRoute from './routes/AuthRoute.js'
 import PostRoute from './routes/PostRoute.js'
 import cors from 'cors'
 import UploadRoute from './routes/UploadRoute.js'
+import ChatRoute from './routes/ChatRoute.js'
+import MessageRoute from './routes/MessageRoute.js'
 const app = express();
 
 // to serve images for public
@@ -23,4 +25,6 @@ app.use('/auth', AuthRoute)
 app.use('/user', UserRoute)
 app.use('/post', PostRoute)
 app.use('/upload',UploadRoute)
+app.use('/chat',ChatRoute)
+app.use('/message',MessageRoute)
 
